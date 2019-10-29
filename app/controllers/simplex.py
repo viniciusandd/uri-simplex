@@ -11,7 +11,7 @@ def iniciar_simplex():
 
     equacao = ""
     equacao += preparar_funcao_objetivo(funcao_objetivo, len(restricoes))
-    equacao += adicionar_variaveis_de_folga(restricoes)
+    equacao += adicionar_variaveis_de_folga_nas_restricoes(restricoes)
 
     print(equacao)
     # tabela = np.fromstring(equacao, dtype=str, sep=' ')
@@ -23,26 +23,24 @@ def preparar_funcao_objetivo(funcao_objetivo, len_restricoes):
     list_valores = funcao_objetivo.split('+')    
     for i in range(len(list_valores)):
         list_valores[i] = '-%s' % list_valores[i]
+
+    variaveis_de_folga = criar_variaveis_de_folga(len_restricoes)
+    return '%s%s0\n' % (' '.join(list_valores), variaveis_de_folga)
+
+def criar_variaveis_de_folga(len_restricoes):
     variaveis_de_folga = ""
     for i in range(len_restricoes):
-        variaveis_de_folga += ' +xF%s' % (i + 1)
-    return '%s%s =0\n' % (' '.join(list_valores), variaveis_de_folga)
-
-def adicionar_variaveis_de_folga(list_restricoes):
-    variaveis_de_folga = ""
-    for i in range(len(list_restricoes)):
         variaveis_de_folga += ' +0xF%s' % (i + 1)
+    variaveis_de_folga += ' = '
+    return variaveis_de_folga
 
-    arr_variaveis_de_folga_original = variaveis_de_folga.split()
-
-    print(arr_variaveis_de_folga_original)
-
+def adicionar_variaveis_de_folga_nas_restricoes(list_restricoes):
+    variaveis_de_folga = criar_variaveis_de_folga(len(list_restricoes))
     str_restricoes = ""
     for i in range(len(list_restricoes)):
-        arr_variaveis_de_folga_copia = []
-        arr_variaveis_de_folga_copia = arr_variaveis_de_folga_original
-        arr_variaveis_de_folga_copia[i] = '+1xF%s' % (i + 1)
-        str_restricoes += '%s\n' % list_restricoes[i].replace(' <= ', ' '.join(arr_variaveis_de_folga_copia))
+        arr_variaveis_de_folga = variaveis_de_folga.split()        
+        arr_variaveis_de_folga[i] = '+1xF%s' % (i + 1)
+        str_restricoes += '%s\n' % list_restricoes[i].replace(' <= ', ' %s' % ' '.join(arr_variaveis_de_folga))
     return str_restricoes
 
 def montar_tabela():
