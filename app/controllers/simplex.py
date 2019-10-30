@@ -19,10 +19,8 @@ def iniciar_simplex():
 
 def preparar_funcao_objetivo(funcao_objetivo, len_restricoes):
     list_valores = funcao_objetivo.split('+')   
-    print(list_valores) 
     for i in range(len(list_valores)):
         list_valores[i] = '-%s' % list_valores[i]
-
     variaveis_de_folga = criar_variaveis_de_folga(len_restricoes)
     return '%s%s0 ' % (' '.join(list_valores), variaveis_de_folga)
 
@@ -44,3 +42,12 @@ def criar_variaveis_de_folga(len_restricoes):
 
 def criar_tabela(equacao, len_restricoes, len_variaveis_de_decisao):
     return np.array(equacao.strip().split(' ')).reshape(len_restricoes+1, len_variaveis_de_decisao+len_restricoes+1)
+
+def encontrar_coluna_que_entra():
+    pass
+
+def encontrar_linha_que_sai():
+    pass
+
+def encontrar_elemento_pivo():
+    pass
