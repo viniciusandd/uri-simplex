@@ -15,14 +15,16 @@ def iniciar_simplex():
     np_funcao_objetivo = np.array([funcao_objetivo])
     np_restricoes = np.array(restricoes)
     tabela = np.concatenate((np_funcao_objetivo, np_restricoes), axis=0)
-    # print(tabela)
-
+    
     coluna_que_entra = achar_coluna_que_entra(tabela)
-    linha_que_sai    = achar_linha_que_sai(tabela, coluna_que_entra)
-    print(coluna_que_entra)
-    print(linha_que_sai)
+    linha_que_sai = achar_linha_que_sai(tabela, coluna_que_entra)
     elemento_pivo = achar_elemento_pivo(tabela, coluna_que_entra, linha_que_sai)
-    print(elemento_pivo)
+
+    nova_linha_pivo = calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo)
+
+    nova_tabela = calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo)
+
+    achar_variaveis_basicas_e_nao_basicas(nova_tabela, variaveis)
 
     return jsonify({"status":1})
 
@@ -34,7 +36,7 @@ def achar_coluna_que_entra(tabela):
 
 def achar_linha_que_sai(tabela, coluna_que_entra):
     divisoes = []
-    for i in range(len(tabela)):        
+    for i in range(len(tabela)):
         if i > 0:
             linha = tabela[i]
             resultado = linha[len(linha)-1] / linha[coluna_que_entra]
@@ -44,8 +46,41 @@ def achar_linha_que_sai(tabela, coluna_que_entra):
                     "resultado": resultado
                 }
                 divisoes.append(obj)
-
     return sorted(divisoes, key=itemgetter('resultado'))[0]['posicao']    
 
 def achar_elemento_pivo(tabela, coluna_que_entra, linha_que_sai):
     return tabela[linha_que_sai][coluna_que_entra]
+
+def calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo):
+    nova_linha_pivo = []
+    linha_pivo = tabela[2]
+    for elemento in linha_pivo:
+        nova_linha_pivo.append(float("{0:.2f}".format(elemento / elemento_pivo)))
+    return nova_linha_pivo
+
+def calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo):
+    novas_linhas = []
+    for i in range(len(tabela)):
+        if i != linha_que_sai:
+            elementos_multiplicados = []
+            linha = tabela[i]
+            multiplicador = linha[coluna_que_entra] * -1
+            
+            for elemento in nova_linha_pivo:
+                elementos_multiplicados.append(float("{0:.2f}".format(elemento * multiplicador)))
+
+            nova_linha = []
+            for i in range(len(linha)):
+                soma = elementos_multiplicados[i] + linha[i]
+                nova_linha.append(soma)            
+            novas_linhas.append(nova_linha)
+        else:
+            novas_linhas.append(nova_linha_pivo)
+
+    return novas_linhas
+
+def achar_variaveis_basicas_e_nao_basicas(tabela, variaveis):
+    pass
+
+
+
