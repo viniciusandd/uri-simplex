@@ -82,7 +82,7 @@ def calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pi
 def achar_variaveis_basicas_e_nao_basicas(tabela, variaveis):
     index_linha  = 0
     index_coluna = 0
-    coluna = ''
+    coluna  = ''
     colunas = []
     for i in range(len(tabela) * len(variaveis)):
         linha = tabela[index_linha]
@@ -94,4 +94,11 @@ def achar_variaveis_basicas_e_nao_basicas(tabela, variaveis):
             index_linha = 0
         else:
             index_linha = index_linha + 1        
-    print(colunas)
+    
+    for i in range(len(colunas)):               
+        if i > 0 and i < len(variaveis)-1:
+            c = colunas[i]
+            if c.count('1.0') == 1 and c.count('0.0') == (len(c)-1):
+                print('Variavel Basica')
+            else:
+                print('Variavel Não Basica')            
