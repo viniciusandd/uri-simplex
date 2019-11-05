@@ -24,7 +24,9 @@ def iniciar_simplex():
 
     nova_tabela = calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo)
 
-    achar_variaveis_basicas_e_nao_basicas(nova_tabela, variaveis)
+    variaveis = achar_variaveis_basicas_e_nao_basicas(nova_tabela, variaveis)
+
+    solucao_otima = verificar_solucao_otima(nova_tabela[0])
 
     return jsonify({"status":1})
 
@@ -80,11 +82,6 @@ def calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pi
     return novas_linhas
 
 def achar_variaveis_basicas_e_nao_basicas(tabela, variaveis):
-
-    for t in tabela:
-        print(t)
-    print('')
-
     index_linha  = 0
     index_coluna = 0
     coluna  = ''
@@ -113,3 +110,14 @@ def achar_variaveis_basicas_e_nao_basicas(tabela, variaveis):
                 variaveis_basicas_e_nao_basicas[variavel] = 0
     
     return variaveis_basicas_e_nao_basicas
+
+def verificar_solucao_otima(linha_z):
+    cont_negativos = 0
+    for elemento in linha_z:
+        if float(elemento) < 0.0:            
+            cont_negativos = cont_negativos + 1
+            break
+    if cont_negativos > 0:
+        return False
+
+    return True
