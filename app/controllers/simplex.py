@@ -5,33 +5,45 @@ from operator import itemgetter
 from app import app
 
 @app.route('/simplex/iniciar', methods=['POST'])
-def iniciar_simplex():
+def receber_entradas():
     json = request.get_json()
     
     variaveis       = json['variaveis']
     funcao_objetivo = json['funcao_objetivo']
     restricoes      = json['restricoes']
 
+    tabela = criar_tabela(funcao_objetivo, restricoes)
+    json = iniciar_simplex(tabela, variaveis)
+
+    return jsonify(json)
+
+def criar_tabela(funcao_objetivo, restricoes):
     np_funcao_objetivo = np.array([funcao_objetivo])
     np_restricoes = np.array(restricoes)
-    tabela = np.concatenate((np_funcao_objetivo, np_restricoes), axis=0)
-    
+    tabela = np.concatenate((np_funcao_objetivo, np_restricoes), axis=0)    
+    return tabela.tolist()
+
+def iniciar_simplex(tabela, variaveis):    
     coluna_que_entra = achar_coluna_que_entra(tabela)
-    linha_que_sai = achar_linha_que_sai(tabela, coluna_que_entra)
-    elemento_pivo = achar_elemento_pivo(tabela, coluna_que_entra, linha_que_sai)
-
-    nova_linha_pivo = calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo)
-
-    nova_tabela = calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo)
-
-    variaveis = achar_variaveis_basicas_e_nao_basicas(nova_tabela, variaveis)
-
-    solucao_otima = verificar_solucao_otima(nova_tabela[0])
-
-    return jsonify({"status":1})
+    linha_que_sai    = achar_linha_que_sai(tabela, coluna_que_entra)
+    elemento_pivo    = achar_elemento_pivo(tabela, coluna_que_entra, linha_que_sai)
+    nova_linha_pivo  = calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo)    
+    nova_tabela      = calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo)
+    variaveis        = achar_variaveis(nova_tabela, variaveis)
+    solucao_otima    = verificar_solucao_otima(nova_tabela[0])
+    
+    json = {}
+    json['tabela']           = tabela
+    json['coluna_que_entra'] = coluna_que_entra
+    json['linha_que_sai']    = linha_que_sai
+    json['elemento_pivo']    = elemento_pivo
+    json['nova_tabela']      = nova_tabela
+    json['variaveis']        = variaveis
+    json['solucao_otima']    = solucao_otima
+    return json
 
 def achar_coluna_que_entra(tabela):
-    linha_z = tabela[0].tolist()
+    linha_z = tabela[0]
     menor_valor_absoluto = sorted(linha_z)[0]
     posicao_menor_valor_absoluto = linha_z.index(menor_valor_absoluto)
     return posicao_menor_valor_absoluto
@@ -81,7 +93,7 @@ def calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pi
 
     return novas_linhas
 
-def achar_variaveis_basicas_e_nao_basicas(tabela, variaveis):
+def achar_variaveis(tabela, variaveis):
     index_linha  = 0
     index_coluna = 0
     coluna  = ''
@@ -97,7 +109,7 @@ def achar_variaveis_basicas_e_nao_basicas(tabela, variaveis):
         else:
             index_linha = index_linha + 1        
     
-    variaveis_basicas_e_nao_basicas = {}
+    dict_variaveis = {}
     for i in range(len(colunas)):         
         if i > 0 and i < len(variaveis)-1:
             c = colunas[i]
@@ -105,11 +117,11 @@ def achar_variaveis_basicas_e_nao_basicas(tabela, variaveis):
             if c.count('1.0') == 1 and c.count('0.0') == (len(c)-1):
                 posicao_do_1 = c.index('1.0')
                 valor_independente = tabela[posicao_do_1][len(variaveis)-1]
-                variaveis_basicas_e_nao_basicas[variavel] = valor_independente                
+                dict_variaveis[variavel] = valor_independente                
             else:                
-                variaveis_basicas_e_nao_basicas[variavel] = 0
-    
-    return variaveis_basicas_e_nao_basicas
+                dict_variaveis[variavel] = 0
+    dict_variaveis['z'] = tabela[0][len(variaveis)-1]
+    return dict_variaveis
 
 def verificar_solucao_otima(linha_z):
     cont_negativos = 0
