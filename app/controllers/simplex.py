@@ -5,17 +5,27 @@ from operator import itemgetter
 from app import app
 
 @app.route('/simplex/iniciar', methods=['POST'])
-def receber_entradas():
+def index():
     json = request.get_json()
     
     variaveis       = json['variaveis']
     funcao_objetivo = json['funcao_objetivo']
     restricoes      = json['restricoes']
-
+    
     tabela = criar_tabela(funcao_objetivo, restricoes)
-    json = iniciar_simplex(tabela, variaveis)
 
-    return jsonify(json)
+    retorno = []
+    while True:
+        simplex = iniciar_simplex(tabela, variaveis)
+        retorno.append(simplex)
+        if simplex['solucao_otima']:
+            break
+        else:
+            tabela = simplex['nova_tabela']
+            simplex['tabela'] = []
+            simplex['nova_tabela'] = []                        
+
+    return jsonify(retorno)
 
 def criar_tabela(funcao_objetivo, restricoes):
     np_funcao_objetivo = np.array([funcao_objetivo])
