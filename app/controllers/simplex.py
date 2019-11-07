@@ -22,8 +22,6 @@ def index():
             break
         else:
             tabela = simplex['nova_tabela']
-            simplex['tabela'] = []
-            simplex['nova_tabela'] = []                        
 
     return jsonify(retorno)
 
