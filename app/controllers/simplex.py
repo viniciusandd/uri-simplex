@@ -1,11 +1,15 @@
-from flask import request, jsonify
+from flask import request, jsonify, render_template
 import numpy as np
 from json import loads
 from operator import itemgetter
 from app import app
 
-@app.route('/simplex/iniciar', methods=['POST'])
+@app.route('/', methods=['GET'])
 def index():
+     return render_template('index.html')
+
+@app.route('/simplex/iniciar', methods=['POST'])
+def main():
     json = request.get_json()
     
     variaveis       = json['variaveis']
