@@ -1,15 +1,110 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Simplex</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 </head>
+
 <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Programação Matemática - Algoritmo Simplex</a>
+            </div>
+            <!--/.navbar-collapse -->
+        </div>
+    </nav>
+
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+        <div class="container">
+            <h1>PySimplex!</h1>
+            <p>This is a template for a simple marketing or informational website. It includes a large callout called a
+                jumbotron and three supporting pieces of content. Use it as a starting point to create something more
+                unique.</p>
+            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+        </div>
+    </div>
+
+    <div id="primeira-etapa" class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <form style="text-align: center;">
+                    <div class="form-group">
+                        <label for="variaveis-decisao">Quantas variáveis de decisão?</label>
+                        <input type="text" class="form-control" id="variaveis-decisao" placeholder="1, 2, 3, 4...">                        
+                    </div>
+                    <div class="form-group">
+                        <label for="restricoes">Quantas restrições?</label>
+                        <input type="text" class="form-control" id="restricoes" placeholder="1, 2, 3, 4...">
+                    </div>
+                    <button id="btn-prosseguir" type="submit" class="btn btn-primary">
+                        <i></i>
+                        Prosseguir
+                    </button>
+                </form>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+
+        <hr>
+
+        <footer style="text-align: center;">
+            <p>&copy; Vinicius Emanoel Andrade, 2019</p>
+        </footer>
+    </div>
+
+    <div id="segunda-etapa" class="container" style="display: none;">
+            <!-- Example row of columns -->
+            <div class="row">
+                <div class="col-md-2"></div>
+                <div class="col-md-8">
+                    <form style="text-align: center;">
+                        <div class="form-group">
+                            <label for="variaveis-decisao">Qual é o objetivo da função?</label>
+                            <select class="form-control" id="exampleFormControlSelect1">
+                                <option>Maximizar</option>
+                                <option>Minimizar</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="restricoes">Função</label>
+                            <input type="text" class="form-control" id="restricoes" placeholder="1, 2, 3, 4...">
+                        </div>
+                        <button id="btn-voltar" type="submit" class="btn btn-secondary">
+                            <i></i>
+                            Voltar
+                        </button>
+                        <button id="btn-calcular" type="submit" class="btn btn-primary">
+                            <i></i>
+                            Calcular
+                        </button>
+                    </form>
+                </div>
+                <div class="col-md-2"></div>
+            </div>
     
-    <button id="btn" type="button" class="btn btn-success">Success</button>
+            <hr>
     
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>    
+            <footer style="text-align: center;">
+                <p>&copy; Vinicius Emanoel Andrade, 2019</p>
+            </footer>
+        </div> <!-- /container -->    
+
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
+
 </html>
