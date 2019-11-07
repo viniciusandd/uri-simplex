@@ -77,7 +77,7 @@ def achar_elemento_pivo(tabela, coluna_que_entra, linha_que_sai):
 
 def calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo):
     nova_linha_pivo = []
-    linha_pivo = tabela[2]
+    linha_pivo = tabela[linha_que_sai]
     for elemento in linha_pivo:
         nova_linha_pivo.append(float("{0:.2f}".format(elemento / elemento_pivo)))
     return nova_linha_pivo
