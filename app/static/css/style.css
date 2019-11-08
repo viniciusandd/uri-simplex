@@ -1,0 +1,23 @@
+.container {
+    text-align: center;
+}
+
+#segunda-etapa {
+    display: none;
+}
+
+#segunda-etapa .row {
+    padding: 10px;
+}
+
+#segunda-etapa .btn-titulo {
+    margin-bottom: 10px;
+}
+
+#segunda-etapa .row .form-group {
+    margin: 10px;
+}
+
+footer {
+    text-align: center;
+}

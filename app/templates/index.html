@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Simplex</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-        integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"
 </head>
 
 <body>
@@ -40,67 +40,110 @@
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
-                <form style="text-align: center;">
-                    <div class="form-group">
-                        <label for="variaveis-decisao">Quantas variáveis de decisão?</label>
-                        <input type="text" class="form-control" id="variaveis-decisao" placeholder="1, 2, 3, 4...">                        
-                    </div>
-                    <div class="form-group">
-                        <label for="restricoes">Quantas restrições?</label>
-                        <input type="text" class="form-control" id="restricoes" placeholder="1, 2, 3, 4...">
-                    </div>
-                    <button id="btn-prosseguir" type="submit" class="btn btn-primary">
-                        <i></i>
-                        Prosseguir
-                    </button>
-                </form>
+                <div class="form-group">
+                    <label for="variaveis-decisao">Quantas variáveis de decisão?</label>
+                    <input type="text" class="form-control" id="variaveis-decisao" placeholder="1, 2, 3, 4...">
+                </div>
+                <div class="form-group">
+                    <label for="restricoes">Quantas restrições?</label>
+                    <input type="text" class="form-control" id="restricoes" placeholder="1, 2, 3, 4...">
+                </div>
+                <button id="btn-prosseguir" type="submit" class="btn btn-primary">
+                    <i></i>
+                    Prosseguir
+                </button>
             </div>
             <div class="col-md-2"></div>
         </div>
 
         <hr>
-
-        <footer style="text-align: center;">
-            <p>&copy; Vinicius Emanoel Andrade, 2019</p>
-        </footer>
     </div>
 
-    <div id="segunda-etapa" class="container" style="display: none;">
-            <!-- Example row of columns -->
-            <div class="row">
-                <div class="col-md-2"></div>
-                <div class="col-md-8">
-                    <form style="text-align: center;">
-                        <div class="form-group">
-                            <label for="variaveis-decisao">Qual é o objetivo da função?</label>
-                            <select class="form-control" id="exampleFormControlSelect1">
-                                <option>Maximizar</option>
-                                <option>Minimizar</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="restricoes">Função</label>
-                            <input type="text" class="form-control" id="restricoes" placeholder="1, 2, 3, 4...">
-                        </div>
-                        <button id="btn-voltar" type="submit" class="btn btn-secondary">
-                            <i></i>
-                            Voltar
-                        </button>
-                        <button id="btn-calcular" type="submit" class="btn btn-primary">
-                            <i></i>
-                            Calcular
-                        </button>
-                    </form>
-                </div>
-                <div class="col-md-2"></div>
+    <div id="segunda-etapa" class="container">
+        <div class="row">            
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="exampleFormControlSelect1">Qual é seu objetivo?</label>
+                    <select class="form-control" id="exampleFormControlSelect1">
+                        <option>Maximizar</option>
+                        <option>Minimizar</option>                        
+                    </select>
+                </div>                
             </div>
-    
-            <hr>
-    
-            <footer style="text-align: center;">
-                <p>&copy; Vinicius Emanoel Andrade, 2019</p>
-            </footer>
-        </div> <!-- /container -->    
+            <div class="col-md-3"></div>
+        </div>
+        <div class="row">
+            <label>Qual sua função?</label>
+            <form class="form-inline">
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X1</span>
+                </div>
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X2</span>
+                </div>
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X3</span>
+                </div>
+            </form>      
+        </div>
+        <div class="row">
+            <label>Quais suas restrições?</label>
+            <form class="form-inline">
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X1</span>
+                </div>
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X2</span>
+                </div>
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X3</span>
+                </div>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option><=</option>
+                    <option>>=</option>
+                </select>   
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">                        
+                </div>                
+            </form>      
+            <form class="form-inline">
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X1</span>
+                </div>
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X2</span>
+                </div>
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">
+                    <span class="badge badge-dark">X3</span>
+                </div>
+                <select class="form-control" id="exampleFormControlSelect1">
+                    <option><=</option>
+                    <option>>=</option>
+                </select>                
+                <div class="form-group mb-2">                    
+                    <input type="text" class="form-control-plaintext">                        
+                </div>                
+            </form>      
+        </div>
+        <div class="row">
+            <button id="btn-voltar" class="btn btn-secondary btn-titulo">Voltar</button>
+            <button class="btn btn-primary btn-titulo">Calcular</button>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Vinicius Emanoel Andrade, 2019</p>
+    </footer>    
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
