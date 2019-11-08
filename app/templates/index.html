@@ -36,17 +36,17 @@
         </div>
     </div>
 
-    <div id="primeira-etapa" class="container">
+    <div id="div-primeira-etapa" class="container">
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-8">
                 <div class="form-group">
-                    <label for="variaveis-decisao">Quantas variáveis de decisão?</label>
-                    <input type="text" class="form-control" id="variaveis-decisao" placeholder="1, 2, 3, 4...">
+                    <label for="txt-variaveis-decisao">Quantas variáveis de decisão?</label>
+                    <input type="text" class="form-control" id="txt-variaveis-decisao" placeholder="1, 2, 3, 4...">
                 </div>
                 <div class="form-group">
-                    <label for="restricoes">Quantas restrições?</label>
-                    <input type="text" class="form-control" id="restricoes" placeholder="1, 2, 3, 4...">
+                    <label for="txt-restricoes">Quantas restrições?</label>
+                    <input type="text" class="form-control" id="txt-restricoes" placeholder="1, 2, 3, 4...">
                 </div>
                 <button id="btn-prosseguir" type="submit" class="btn btn-primary">
                     <i></i>
@@ -59,7 +59,7 @@
         <hr>
     </div>
 
-    <div id="segunda-etapa" class="container">
+    <div id="div-segunda-etapa" class="container">
         <div class="row">            
             <div class="col-md-3"></div>
             <div class="col-md-6">
@@ -73,24 +73,9 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <div class="row">
-            <label>Qual sua função?</label>
-            <form class="form-inline">
-                <div class="form-group mb-2">                    
-                    <input type="text" class="form-control-plaintext">
-                    <span class="badge badge-dark">X1</span>
-                </div>
-                <div class="form-group mb-2">                    
-                    <input type="text" class="form-control-plaintext">
-                    <span class="badge badge-dark">X2</span>
-                </div>
-                <div class="form-group mb-2">                    
-                    <input type="text" class="form-control-plaintext">
-                    <span class="badge badge-dark">X3</span>
-                </div>
-            </form>      
+        <div id="div-funcao" class="row">    
         </div>
-        <div class="row">
+        <div id="div-restricoes" class="row">
             <label>Quais suas restrições?</label>
             <form class="form-inline">
                 <div class="form-group mb-2">                    
@@ -109,27 +94,6 @@
                     <option><=</option>
                     <option>>=</option>
                 </select>   
-                <div class="form-group mb-2">                    
-                    <input type="text" class="form-control-plaintext">                        
-                </div>                
-            </form>      
-            <form class="form-inline">
-                <div class="form-group mb-2">                    
-                    <input type="text" class="form-control-plaintext">
-                    <span class="badge badge-dark">X1</span>
-                </div>
-                <div class="form-group mb-2">                    
-                    <input type="text" class="form-control-plaintext">
-                    <span class="badge badge-dark">X2</span>
-                </div>
-                <div class="form-group mb-2">                    
-                    <input type="text" class="form-control-plaintext">
-                    <span class="badge badge-dark">X3</span>
-                </div>
-                <select class="form-control" id="exampleFormControlSelect1">
-                    <option><=</option>
-                    <option>>=</option>
-                </select>                
                 <div class="form-group mb-2">                    
                     <input type="text" class="form-control-plaintext">                        
                 </div>                

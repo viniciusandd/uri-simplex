@@ -2,19 +2,19 @@
     text-align: center;
 }
 
-#segunda-etapa {
+#div-segunda-etapa {
     display: none;
 }
 
-#segunda-etapa .row {
+#div-segunda-etapa .row {
     padding: 10px;
 }
 
-#segunda-etapa .btn-titulo {
+#div-segunda-etapa .btn-titulo {
     margin-bottom: 10px;
 }
 
-#segunda-etapa .row .form-group {
+#div-segunda-etapa .row .form-group {
     margin: 10px;
 }
 
