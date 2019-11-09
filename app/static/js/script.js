@@ -5,8 +5,11 @@ $('#btn-prosseguir').click(function(e) {
     let qtd_restricoes = parseInt($('#txt-restricoes').val());
 
     if (qtd_variaveis_decisao > 0 && qtd_restricoes > 0) {        
-        let campos = criar_html(qtd_variaveis_decisao, 1); 
-        $('#div-funcao').append(conteudo);
+        let funcao = criar_html(1, qtd_variaveis_decisao);
+        $('#div-funcao').append(funcao);
+
+        let restricoes = criar_html(qtd_restricoes, qtd_variaveis_decisao);
+        $('#div-restricoes').append(restricoes);
 
         $('#div-primeira-etapa').hide(500);
         $('#div-segunda-etapa').show(500);        
@@ -15,24 +18,28 @@ $('#btn-prosseguir').click(function(e) {
     }
 });
 
-function criar_html(qtd_variaveis_decisao, qtd_restricoes) {
+function criar_html(qtd_forms, qtd_campos) {
     var conteudo = '';
-    for (i=0; i<qtd; i++) {
-        conteudo = '<label>Qual sua função?</label>';
+    for (i=0; i<qtd_forms; i++) {        
         conteudo += '<form class="form-inline">';
-        conteudo += '<div class="form-group mb-2">';
-        conteudo += '<input type="text" class="form-control-plaintext">';
-        conteudo += '<span class="badge badge-dark">X1</span>';
-        conteudo += '</div>';
-
-        for (i=0; i<qtd; i++) {
+        for (h=0; h<qtd_campos; h++) {
             conteudo += '<div class="form-group mb-2">';
             conteudo += '<input type="text" class="form-control-plaintext">';
             conteudo += '<span class="badge badge-dark">X1</span>';
             conteudo += '</div>';
         }
+        if (qtd_forms > 1) { // restricoes
+            conteudo += '<select class="form-control" id="exampleFormControlSelect1">';
+            conteudo += '<option><=</option>';
+            conteudo += '<option>>=</option>';
+            conteudo += '</select>';
+            conteudo += '<div class="form-group mb-2">';
+            conteudo += '<input type="text" class="form-control-plaintext">';
+            conteudo += '</div>';
+        }        
         conteudo += '</form>'; 
-    }  
+    }
+    return conteudo;
 }
 
 $('#btn-voltar').click(function(e) {
