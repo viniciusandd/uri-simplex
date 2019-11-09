@@ -28,11 +28,10 @@
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">
         <div class="container">
-            <h1>PySimplex!</h1>
+            <h1>PySimplex</h1>
             <p>This is a template for a simple marketing or informational website. It includes a large callout called a
                 jumbotron and three supporting pieces of content. Use it as a starting point to create something more
-                unique.</p>
-            <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+                unique.</p>            
         </div>
     </div>
 
@@ -73,13 +72,30 @@
             </div>
             <div class="col-md-3"></div>
         </div>
-        <div id="div-funcao" class="row">    
+        <div id="div-funcao" class="row">
+            <label>Qual sua função?</label>
         </div>
-        <div id="div-restricoes" class="row">            
+        <div id="div-restricoes" class="row">
+            <label>Quais suas restrições?</label>
         </div>
         <div class="row">
-            <button id="btn-voltar" class="btn btn-secondary btn-titulo">Voltar</button>
-            <button class="btn btn-primary btn-titulo">Calcular</button>
+            <button id="btn-voltar-primeira-etapa" class="btn btn-secondary btn-titulo">Voltar</button>
+            <button id="btn-criar-funcao" class="btn btn-primary btn-titulo">Criar função</button>
+        </div>
+        <hr>
+    </div>
+
+    <div id="div-terceira-etapa" class="container">
+        <div class="row">            
+            <div class="jumbotron jumbotron-fluid">
+                <p id="div-funcao-pronta" class="lead">
+                    
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <button id="btn-voltar-segunda-etapa" class="btn btn-secondary btn-titulo">Voltar</button>
+            <button id="btn-calcular" class="btn btn-primary btn-titulo">Calcular</button>
         </div>
         <hr>
     </div>
@@ -88,9 +104,10 @@
         <p>&copy; Vinicius Emanoel Andrade, 2019</p>
     </footer>    
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>    
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/bootbox/bootbox.js') }}"></script>
 </body>
 
 </html>

@@ -6,6 +6,10 @@
     display: none;
 }
 
+#div-terceira-etapa {
+    display: none;
+}
+
 #div-segunda-etapa .row {
     padding: 10px;
 }
