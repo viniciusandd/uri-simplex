@@ -166,10 +166,11 @@ $('#btn-calcular').click(function(e) {
                 $('#div-terceira-etapa').hide(500);
                 $('#div-quarta-etapa').show(500);
                 var conteudo = '';
-                $(data).each(function (index, value) {
-                    if (index == 0) { // Só será mostrada a primeira
-                        // Montando as tabelas
-                        conteudo += '<h3>Tabela Inicial</h3>';
+                $(data).each(function (index, value) 
+                {
+                    // PRIMEIRA TABELA
+                    if (index == 0) {
+                        conteudo += '<h3>Primeira tabela</h3>';
                         conteudo += '<table class="table">';
                         conteudo += '<thead>';
                         conteudo += '<tr>';
@@ -190,7 +191,46 @@ $('#btn-calcular').click(function(e) {
                         conteudo += '</table>';                        
                     }
 
-                    // Montando as novas tabelas
+                    // LINHA PIVO
+                    conteudo += '<h3>Calculando a nova linha pivô</h3>';
+                    conteudo += '<table class="table">';
+                    conteudo += '<tbody>';
+                    conteudo += '<tr>';
+                    conteudo += '<td><span class="badge badge-secondary">LP</span></td>';
+                    $(value.linha_que_sai).each(function (index, elemento) {                        
+                        conteudo += '<td>' + elemento + '</td>';
+                    });
+                    conteudo += '</tr>';
+
+                    conteudo += '<tr>';
+                    conteudo += '<td><span class="badge badge-secondary">/ '+ value.elemento_pivo +'</span></td>';
+                    conteudo += '</tr>';
+
+                    //NOVA LINHA PIVO
+                    conteudo += '<tr>';
+                    conteudo += '<td><span class="badge badge-secondary">NLP</span></td>';
+                    $(value.nova_linha_pivo).each(function (index, elemento) {                        
+                        conteudo += '<td>' + elemento + '</td>';
+                    });
+                    conteudo += '</tr>';
+                    conteudo += '</tbody>';
+                    conteudo += '</table>';
+
+                    //NOVAS LINHAS
+                    conteudo += '<h3>Calculando as novas linhas</h3>';
+                    conteudo += '<table class="table">';
+                    conteudo += '<tbody>';                    
+                    $(value.novas_linhas).each(function (index, linha) {
+                        conteudo += '<tr>';
+                        $(linha).each(function (index, elemento) {
+                            conteudo += '<td>' + elemento + '</td>';
+                        });
+                        conteudo += '</tr>';
+                    });
+                    conteudo += '</tbody>';
+                    conteudo += '</table>';                    
+
+                    //NOVA TABELA
                     conteudo += '<h3>Tabela</h3>';
                     conteudo += '<table class="table">';
                     conteudo += '<thead>';
@@ -211,23 +251,52 @@ $('#btn-calcular').click(function(e) {
                     conteudo += '</tbody>';
                     conteudo += '</table>';
                     
-                    // Mostrando o valor das variáveis
-                    var nome_variaveis = Object.keys(value.valor_variaveis.basicas);
-                    conteudo += '<p><span class="badge badge-secondary">VB</span>&nbsp';
-                    $(nome_variaveis).each(function (index, variavel) {
-                        conteudo += variavel + ' = ' + value.valor_variaveis.basicas[variavel] + ' | &nbsp;';
-                    });
-                    conteudo += '</p>';
+                    // VALOR DAS VARIAVEIS
+                    // conteudo += '<h3>Variáveis</h3>';
+                    // var nome_variaveis = Object.keys(value.valor_variaveis.basicas);
+                    // conteudo += '<p><span class="badge badge-secondary">VB</span>&nbsp';
+                    // $(nome_variaveis).each(function (index, variavel) {
+                    //     conteudo += variavel + ' = ' + value.valor_variaveis.basicas[variavel] + ' | &nbsp;';
+                    // });
+                    // conteudo += '</p>';
 
-                    nome_variaveis = Object.keys(value.valor_variaveis.nao_basicas);
-                    conteudo += '<p><span class="badge badge-secondary">VNB</span>&nbsp';
+                    // nome_variaveis = Object.keys(value.valor_variaveis.nao_basicas);
+                    // conteudo += '<p><span class="badge badge-secondary">VNB</span>&nbsp';
+                    // $(nome_variaveis).each(function (index, variavel) {
+                    //     conteudo += variavel + ' = ' + value.valor_variaveis.nao_basicas[variavel] + ' | &nbsp;';
+                    // });
+                    // conteudo += '</p>';
+                    // conteudo += '<p><span class="badge badge-secondary">Z</span>&nbsp' + value.valor_variaveis['z'] + '</p>';
+                    // conteudo += '<p><span class="badge badge-secondary">Solução Ótima</span>&nbsp' + value.solucao_otima + '</p>';
+
+
+                    // VALOR DAS VARIAVEIS
+                    conteudo += '<h3>Variáveis</h3>';
+                    conteudo += '<table class="table">';                
+                    conteudo += '<tbody>';
+                    conteudo += '<tr>';
+                    conteudo += '<td><span class="badge badge-secondary">VB</span></td>';
+                    var nome_variaveis = Object.keys(value.valor_variaveis.basicas);
                     $(nome_variaveis).each(function (index, variavel) {
-                        conteudo += variavel + ' = ' + value.valor_variaveis.nao_basicas[variavel] + ' | &nbsp;';
+                        conteudo += '<td>' + variavel + ' = ' + value.valor_variaveis.basicas[variavel] + '</td>';
                     });
-                    conteudo += '</p>';
-                    conteudo += '<p><span class="badge badge-secondary">Z</span>&nbsp' + value.valor_variaveis['z'] + '</p>';
-                    conteudo += '<p><span class="badge badge-secondary">Solução Ótima</span>&nbsp' + value.solucao_otima + '</p>';
-                    conteudo += '<hr>'
+                    conteudo += '</tr>';
+
+                    conteudo += '<tr>';
+                    conteudo += '<td><span class="badge badge-secondary">VNB</span></td>';
+                    nome_variaveis = Object.keys(value.valor_variaveis.nao_basicas);
+                    $(nome_variaveis).each(function (index, variavel) {
+                        conteudo += '<td>' + variavel + ' = ' + value.valor_variaveis.nao_basicas[variavel] + '</td>';
+                    });
+                    conteudo += '</tr>';
+
+                    conteudo += '<tr>';                    
+                    conteudo += '<td><span class="badge badge-secondary">Z</span></td>';
+                    conteudo += '<td>'+value.valor_variaveis.z+'</td>';
+                    conteudo += '</tr>';
+                    conteudo += '</tbody>';
+                    conteudo += '</table>';
+                    
                 });
                 $('#div-resultado').append(conteudo);
             }

@@ -36,19 +36,21 @@ def criar_tabela(funcao_objetivo, restricoes):
     return tabela.tolist()
 
 def iniciar_simplex(tabela, variaveis):    
-    coluna_que_entra = achar_coluna_que_entra(tabela)
-    linha_que_sai    = achar_linha_que_sai(tabela, coluna_que_entra)
-    elemento_pivo    = achar_elemento_pivo(tabela, coluna_que_entra, linha_que_sai)
-    nova_linha_pivo  = calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo)    
-    nova_tabela      = calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo)
-    valor_variaveis  = achar_variaveis(nova_tabela, variaveis)
-    solucao_otima    = verificar_solucao_otima(nova_tabela[0])
+    coluna_que_entra          = achar_coluna_que_entra(tabela)
+    linha_que_sai             = achar_linha_que_sai(tabela, coluna_que_entra)
+    elemento_pivo             = achar_elemento_pivo(tabela, coluna_que_entra, linha_que_sai)
+    nova_linha_pivo           = calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo)    
+    nova_tabela, novas_linhas = calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo)
+    valor_variaveis           = achar_variaveis(nova_tabela, variaveis)
+    solucao_otima             = verificar_solucao_otima(nova_tabela[0])
     
     json = {}
     json['tabela']           = tabela
     json['coluna_que_entra'] = coluna_que_entra
-    json['linha_que_sai']    = linha_que_sai
+    json['linha_que_sai']    = tabela[linha_que_sai]
     json['elemento_pivo']    = elemento_pivo
+    json['nova_linha_pivo']  = nova_linha_pivo
+    json['novas_linhas']     = novas_linhas
     json['nova_tabela']      = nova_tabela
     json['variaveis']        = variaveis
     json['valor_variaveis']  = valor_variaveis
@@ -86,6 +88,7 @@ def calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo):
     return nova_linha_pivo
 
 def calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo):
+    nova_tabela = []
     novas_linhas = []
     for i in range(len(tabela)):
         if i != linha_que_sai:
@@ -100,11 +103,11 @@ def calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pi
             for i in range(len(linha)):
                 soma = elementos_multiplicados[i] + linha[i]
                 nova_linha.append(soma)            
+            nova_tabela.append(nova_linha)
             novas_linhas.append(nova_linha)
         else:
-            novas_linhas.append(nova_linha_pivo)
-
-    return novas_linhas
+            nova_tabela.append(nova_linha_pivo)
+    return nova_tabela, novas_linhas
 
 def achar_variaveis(tabela, variaveis):
     index_linha  = 0
