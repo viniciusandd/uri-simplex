@@ -91,19 +91,21 @@ function preparar_funcao() {
     for (var i=0; i<qtd_variaveis_decisao; i++) {
         linha_z   += ' - ' + campos[i].value + 'x' + (i + 1);
         variaveis += ' x' + (i + 1);
-        funcao    += ' ' + campos[i].value;
+        funcao    += ' -' + campos[i].value;
     }
     linha_z += ' = 0 <br>';    
 
+    var arr_restricoes = [];
     var qtd_restricoes = $('#txt-qtd-restricoes').val();    
     var r = '';
     var outras_linhas = '';
     for (var i=1; i<=qtd_restricoes; i++) {
         r += '0';        
-        var restricoes = $('.txt-restricao' + i);        
+        var restricoes = $('.txt-restricao' + i);   
+        var valor_independente = $('#txt-valor-independente'+i).val();     
         for (var h=0; h<qtd_variaveis_decisao; h++) {
             if (h == qtd_variaveis_decisao - 1) {
-                outras_linhas += restricoes[h].value + 'x' + (h + 1) + ' + xF' + i + ' = ' + $('#txt-valor-independente'+i).val() + '<br>';
+                outras_linhas += restricoes[h].value + 'x' + (h + 1) + ' + xF' + i + ' = ' + valor_independente + '<br>';
             } else {
                 outras_linhas += restricoes[h].value + 'x' + (h + 1) + ' + ';
             }
@@ -114,15 +116,22 @@ function preparar_funcao() {
         var v = criar_array_com_zeros(qtd_restricoes);
         v[i - 1] = '1';
         r += ' ' + v.join(' ');
-        r += ' ' + $('#txt-valor-independente'+i).val() + '\n';        
+        r += ' ' + valor_independente;
+        arr_restricoes.push(r.split(' ').map(x => parseInt(x)));
+        r = '';
     }
     variaveis += ' b'    
     funcao += ' 0';
-
-    console.log(r);
+    
+    var obj = {
+        "variaveis": variaveis.split(' '),
+        "funcao_objetivo": funcao.split(' ').map(x => parseInt(x)),
+        "restricoes": arr_restricoes
+    };
 
     $('#div-funcao-pronta').append(
-        linha_z + outras_linhas
+        "<p class='lead'>" + linha_z + outras_linhas + "</p>" +
+        "<input id='json' value='"+JSON.stringify(obj)+"' type='hidden'>"
     );
 }
 
@@ -143,5 +152,16 @@ $('#btn-voltar-segunda-etapa').click(function(e) {
 
 $('#btn-calcular').click(function(e) {
     e.preventDefault();
-    alert('em desenv');
+    let json = $('#json').val();
+    console.log(json);
+    $.ajax({
+        url: 'http://localhost:5000/simplex/iniciar',
+        method: 'POST',
+        data: json,        
+        dataType: 'json',
+        contentType : 'application/json',
+        success: function(data) {
+            console.log(data);
+        }
+    });
 });
