@@ -1,16 +1,3 @@
-$(document).ready( function () {
-    $('.datatable').DataTable({
-        "paging": false,
-        "searching": false,
-        "ordering": false,
-        "columns": [
-            { "data": "engine" },
-            { "data": "browser" },
-            { "data": "platform" }
-          ]
-    });
-} );
-
 $('#btn-prosseguir').click(function(e) {
     e.preventDefault();
 
@@ -174,10 +161,75 @@ $('#btn-calcular').click(function(e) {
         dataType: 'json',
         contentType: 'application/json',
         success: function(data) {
-            console.log(data);
+            console.log(data);            
             if (data) {
                 $('#div-terceira-etapa').hide(500);
                 $('#div-quarta-etapa').show(500);
+                var conteudo = '';
+                $(data).each(function (index, value) {
+                    if (index == 0) { // Só será mostrada a primeira
+                        // Montando as tabelas
+                        conteudo += '<h3>Tabela Inicial</h3>';
+                        conteudo += '<table class="table">';
+                        conteudo += '<thead>';
+                        conteudo += '<tr>';
+                        $(value.variaveis).each(function (index, value) {
+                            conteudo += '<td>' + value + '</td>';
+                        });
+                        conteudo += '</tr>';
+                        conteudo += '</thead>';
+                        conteudo += '<tbody>';
+                        $(value.tabela).each(function (index, linhas) {
+                            conteudo += '<tr>';
+                            $(linhas).each(function (index, elemento) {
+                                conteudo += '<td>' + elemento + '</td>';
+                            });
+                            conteudo += '</tr>';
+                        });
+                        conteudo += '</tbody>';
+                        conteudo += '</table>';                        
+                    }
+
+                    // Montando as novas tabelas
+                    conteudo += '<h3>Tabela</h3>';
+                    conteudo += '<table class="table">';
+                    conteudo += '<thead>';
+                    conteudo += '<tr>';
+                    $(value.variaveis).each(function (index, value) {
+                        conteudo += '<td>' + value + '</td>';
+                    });
+                    conteudo += '</tr>';
+                    conteudo += '</thead>';
+                    conteudo += '<tbody>';
+                    $(value.nova_tabela).each(function (index, linhas) {
+                        conteudo += '<tr>';
+                        $(linhas).each(function (index, elemento) {
+                            conteudo += '<td>' + elemento + '</td>';
+                        });
+                        conteudo += '</tr>';
+                    });
+                    conteudo += '</tbody>';
+                    conteudo += '</table>';
+                    
+                    // Mostrando o valor das variáveis
+                    var nome_variaveis = Object.keys(value.valor_variaveis.basicas);
+                    conteudo += '<p><span class="badge badge-secondary">VB</span>&nbsp';
+                    $(nome_variaveis).each(function (index, variavel) {
+                        conteudo += variavel + ' = ' + value.valor_variaveis.basicas[variavel] + ' | &nbsp;';
+                    });
+                    conteudo += '</p>';
+
+                    nome_variaveis = Object.keys(value.valor_variaveis.nao_basicas);
+                    conteudo += '<p><span class="badge badge-secondary">VNB</span>&nbsp';
+                    $(nome_variaveis).each(function (index, variavel) {
+                        conteudo += variavel + ' = ' + value.valor_variaveis.nao_basicas[variavel] + ' | &nbsp;';
+                    });
+                    conteudo += '</p>';
+                    conteudo += '<p><span class="badge badge-secondary">Z</span>&nbsp' + value.valor_variaveis['z'] + '</p>';
+                    conteudo += '<p><span class="badge badge-secondary">Solução Ótima</span>&nbsp' + value.solucao_otima + '</p>';
+                    conteudo += '<hr>'
+                });
+                $('#div-resultado').append(conteudo);
             }
         }
     });

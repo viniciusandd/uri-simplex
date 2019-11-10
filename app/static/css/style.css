@@ -9,6 +9,9 @@
 #div-terceira-etapa {
     display: none;
 }
+#div-quarta-etapa {
+    display: none;
+}
 
 #div-segunda-etapa .row {
     padding: 10px;
@@ -24,4 +27,16 @@
 
 footer {
     text-align: center;
+}
+
+.table th {
+    text-align: center;
+}
+
+.table td {
+    text-align: center;
+}
+
+.div-valor-variaveis {
+    text-align: left;    
 }

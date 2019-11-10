@@ -41,7 +41,7 @@ def iniciar_simplex(tabela, variaveis):
     elemento_pivo    = achar_elemento_pivo(tabela, coluna_que_entra, linha_que_sai)
     nova_linha_pivo  = calcular_nova_linha_pivo(tabela, linha_que_sai, elemento_pivo)    
     nova_tabela      = calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pivo)
-    variaveis        = achar_variaveis(nova_tabela, variaveis)
+    valor_variaveis  = achar_variaveis(nova_tabela, variaveis)
     solucao_otima    = verificar_solucao_otima(nova_tabela[0])
     
     json = {}
@@ -51,6 +51,7 @@ def iniciar_simplex(tabela, variaveis):
     json['elemento_pivo']    = elemento_pivo
     json['nova_tabela']      = nova_tabela
     json['variaveis']        = variaveis
+    json['valor_variaveis']  = valor_variaveis
     json['solucao_otima']    = solucao_otima
     return json
 
@@ -122,6 +123,8 @@ def achar_variaveis(tabela, variaveis):
             index_linha = index_linha + 1        
     
     dict_variaveis = {}
+    dict_basicas = {}
+    dict_nao_basicas = {}
     for i in range(len(colunas)):         
         if i > 0 and i < len(variaveis)-1:
             c = colunas[i]
@@ -129,9 +132,11 @@ def achar_variaveis(tabela, variaveis):
             if c.count('1.0') == 1 and c.count('0.0') == (len(c)-1):
                 posicao_do_1 = c.index('1.0')
                 valor_independente = tabela[posicao_do_1][len(variaveis)-1]
-                dict_variaveis[variavel] = valor_independente                
+                dict_basicas[variavel] = valor_independente
             else:                
-                dict_variaveis[variavel] = 0
+                dict_nao_basicas[variavel] = 0
+    dict_variaveis['basicas'] = dict_basicas
+    dict_variaveis['nao_basicas'] = dict_nao_basicas
     dict_variaveis['z'] = tabela[0][len(variaveis)-1]
     return dict_variaveis
 
