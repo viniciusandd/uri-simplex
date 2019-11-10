@@ -69,35 +69,6 @@ $('#btn-criar-funcao').click(function(e) {
     $('#div-terceira-etapa').show(500);
 });
 
-function preparar_funcao() {    
-    var qtd_variaveis_decisao = $('#txt-qtd-variaveis-decisao').val();
-    var campos = $('.txt-funcao');
-    console.log(campos);
-    var linha_z = 'Z'
-    for (var i=0; i<qtd_variaveis_decisao; i++) {
-        console.log(campos[i].value);
-        linha_z += ' - ' + campos[i].value + 'x' + (i + 1);
-    }
-    linha_z += ' = 0 <br>';    
-
-    var outras_linhas = '';
-    var qtd_restricoes = $('#txt-qtd-restricoes').val();
-    for (var i=1; i<=qtd_restricoes; i++) {
-        var restricoes = $('.txt-restricao' + i);        
-        for (var h=0; h<qtd_variaveis_decisao; h++) {            
-            if (h == qtd_variaveis_decisao - 1) {
-                outras_linhas += restricoes[h].value + 'x' + (h + 1) + ' + xF' + i + ' = ' + $('#txt-valor-independente'+i).val() + '<br>';
-            } else {
-                outras_linhas += restricoes[h].value + 'x' + (h + 1) + ' + ';
-            }
-        }
-    }    
-    $('#div-funcao-pronta').append(
-        '<p>' + linha_z + outras_linhas + '</p>'
-    );
-}
-
-function criar_json() {
     // Na função -> Passar os elementos pro lado de Z (ou seja, eles trocam de sinal)
     // Nas restrições -> Adicionar as variáveis de folga
     // Enviar o seguinte json:
@@ -109,7 +80,58 @@ function criar_json() {
     //         [0, 3, 9, 0, 1, 0, 45],
     //         [0, 3, 5, 0, 0, 1, 30]
     //     ]
-    // }    
+    // }   
+
+function preparar_funcao() {    
+    var qtd_variaveis_decisao = $('#txt-qtd-variaveis-decisao').val();
+    var campos = $('.txt-funcao');
+    let variaveis = 'Z';    
+    let funcao = '1';
+    var linha_z = 'Z'
+    for (var i=0; i<qtd_variaveis_decisao; i++) {
+        linha_z   += ' - ' + campos[i].value + 'x' + (i + 1);
+        variaveis += ' x' + (i + 1);
+        funcao    += ' ' + campos[i].value;
+    }
+    linha_z += ' = 0 <br>';    
+
+    var qtd_restricoes = $('#txt-qtd-restricoes').val();    
+    var r = '';
+    var outras_linhas = '';
+    for (var i=1; i<=qtd_restricoes; i++) {
+        r += '0';        
+        var restricoes = $('.txt-restricao' + i);        
+        for (var h=0; h<qtd_variaveis_decisao; h++) {
+            if (h == qtd_variaveis_decisao - 1) {
+                outras_linhas += restricoes[h].value + 'x' + (h + 1) + ' + xF' + i + ' = ' + $('#txt-valor-independente'+i).val() + '<br>';
+            } else {
+                outras_linhas += restricoes[h].value + 'x' + (h + 1) + ' + ';
+            }
+            r += ' ' + restricoes[h].value;
+        }
+        variaveis += ' xF' + i;
+        funcao += ' 0';
+        var v = criar_array_com_zeros(qtd_restricoes);
+        v[i - 1] = '1';
+        r += ' ' + v.join(' ');
+        r += ' ' + $('#txt-valor-independente'+i).val() + '\n';        
+    }
+    variaveis += ' b'    
+    funcao += ' 0';
+
+    console.log(r);
+
+    $('#div-funcao-pronta').append(
+        linha_z + outras_linhas
+    );
+}
+
+function criar_array_com_zeros(qtd) {
+    var a = [];
+    for (var i=0; i<qtd; i++) {
+        a.push('0');
+    }
+    return a;
 }
 
 $('#btn-voltar-segunda-etapa').click(function(e) {
