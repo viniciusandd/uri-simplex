@@ -250,25 +250,6 @@ $('#btn-calcular').click(function(e) {
                     });
                     conteudo += '</tbody>';
                     conteudo += '</table>';
-                    
-                    // VALOR DAS VARIAVEIS
-                    // conteudo += '<h3>Variáveis</h3>';
-                    // var nome_variaveis = Object.keys(value.valor_variaveis.basicas);
-                    // conteudo += '<p><span class="badge badge-secondary">VB</span>&nbsp';
-                    // $(nome_variaveis).each(function (index, variavel) {
-                    //     conteudo += variavel + ' = ' + value.valor_variaveis.basicas[variavel] + ' | &nbsp;';
-                    // });
-                    // conteudo += '</p>';
-
-                    // nome_variaveis = Object.keys(value.valor_variaveis.nao_basicas);
-                    // conteudo += '<p><span class="badge badge-secondary">VNB</span>&nbsp';
-                    // $(nome_variaveis).each(function (index, variavel) {
-                    //     conteudo += variavel + ' = ' + value.valor_variaveis.nao_basicas[variavel] + ' | &nbsp;';
-                    // });
-                    // conteudo += '</p>';
-                    // conteudo += '<p><span class="badge badge-secondary">Z</span>&nbsp' + value.valor_variaveis['z'] + '</p>';
-                    // conteudo += '<p><span class="badge badge-secondary">Solução Ótima</span>&nbsp' + value.solucao_otima + '</p>';
-
 
                     // VALOR DAS VARIAVEIS
                     conteudo += '<h3>Variáveis</h3>';
@@ -294,9 +275,15 @@ $('#btn-calcular').click(function(e) {
                     conteudo += '<td><span class="badge badge-secondary">Z</span></td>';
                     conteudo += '<td>'+value.valor_variaveis.z+'</td>';
                     conteudo += '</tr>';
+
+                    conteudo += '<tr>';                    
+                    conteudo += '<td><span class="badge badge-secondary">Solução Ótima</span></td>';
+                    conteudo += '<td>'+value.solucao_otima+'</td>';
+                    conteudo += '</tr>';
+
                     conteudo += '</tbody>';
                     conteudo += '</table>';
-                    
+                    conteudo += '<hr>';
                 });
                 $('#div-resultado').append(conteudo);
             }

@@ -101,7 +101,7 @@ def calcular_novas_linhas(tabela, coluna_que_entra, linha_que_sai, nova_linha_pi
 
             nova_linha = []
             for i in range(len(linha)):
-                soma = elementos_multiplicados[i] + linha[i]
+                soma = float("{0:.2f}".format(elementos_multiplicados[i] + linha[i]))
                 nova_linha.append(soma)            
             nova_tabela.append(nova_linha)
             novas_linhas.append(nova_linha)
