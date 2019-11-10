@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <title>Simplex</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"
 </head>
 
@@ -99,12 +100,39 @@
         <hr>
     </div>
 
+    <div id="div-quarta-etapa" class="container">
+        <div class="row">
+            <table class="datatable">
+                <thead>
+                    <tr>
+                        <th>Coluna1</th>
+                        <th>Coluna2</th>
+                        <th>Coluna3</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Coluna1</td>
+                        <td>Coluna2</td>
+                        <td>Coluna3</td>
+                    </tr>
+                    <tr>
+                        <td>Coluna1</td>
+                        <td>Coluna2</td>
+                        <td>Coluna3</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
     <footer>
         <p>&copy; Vinicius Emanoel Andrade, 2019</p>
     </footer>    
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>    
+    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
     <script src="{{ url_for('static', filename='js/bootbox/bootbox.js') }}"></script>
     <script type=text/javascript>

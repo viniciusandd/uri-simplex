@@ -1,3 +1,16 @@
+$(document).ready( function () {
+    $('.datatable').DataTable({
+        "paging": false,
+        "searching": false,
+        "ordering": false,
+        "columns": [
+            { "data": "engine" },
+            { "data": "browser" },
+            { "data": "platform" }
+          ]
+    });
+} );
+
 $('#btn-prosseguir').click(function(e) {
     e.preventDefault();
 
@@ -159,9 +172,13 @@ $('#btn-calcular').click(function(e) {
         method: 'POST',
         data: json,        
         dataType: 'json',
-        contentType : 'application/json',
+        contentType: 'application/json',
         success: function(data) {
             console.log(data);
+            if (data) {
+                $('#div-terceira-etapa').hide(500);
+                $('#div-quarta-etapa').show(500);
+            }
         }
     });
 });
