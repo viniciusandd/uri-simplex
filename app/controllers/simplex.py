@@ -67,8 +67,8 @@ def achar_linha_que_sai(tabela, coluna_que_entra):
     divisoes = []
     for i in range(len(tabela)):
         if i > 0:
-            linha = tabela[i]
-            resultado = linha[len(linha)-1] / linha[coluna_que_entra]
+            linha = tabela[i]            
+            resultado = linha[len(linha)-1] / linha[coluna_que_entra] if linha[coluna_que_entra] > 0 else 0
             if resultado > 0:
                 obj = {
                     "posicao": i,
